@@ -2,14 +2,10 @@ package com.yandex.scooter.test;
 
 import com.yandex.scooter.constants.FaqAnswers;
 import com.yandex.scooter.pom.MainPage;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public class FaqTest {
+public class FaqTest extends BaseTest {
 
     private final int questionIndex;
     private final String expectedAnswer;
@@ -28,7 +24,6 @@ public class FaqTest {
         this.expectedAnswer = expectedAnswer;
     }
 
-    private WebDriver driver;
     @Parameterized.Parameters(name = "FAQ вопрос #{0}")
     public static Collection<Object[]> testData() {
         return Arrays.asList(new Object[][]{
@@ -43,13 +38,6 @@ public class FaqTest {
         });
     }
 
-    @Before
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "/Users/A13039316/Downloads/chromedriver-mac-arm64/chromedriver");
-        driver = new ChromeDriver();
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
-
     @Test
     public void testAccordionAnswerText() {
         MainPage mainPage = new MainPage(driver);
@@ -59,12 +47,5 @@ public class FaqTest {
         String actualText = mainPage.getAnswerTextForQuestion(questionIndex);
 
         assertEquals("Текст ответа не совпадает для вопроса #" + questionIndex, expectedAnswer, actualText);
-    }
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
     }
 }

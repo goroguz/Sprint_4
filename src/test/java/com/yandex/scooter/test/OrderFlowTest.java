@@ -2,24 +2,18 @@ package com.yandex.scooter.test;
 
 import com.yandex.scooter.pom.MainPage;
 import com.yandex.scooter.pom.OrderPage;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class OrderFlowTest {
+public class OrderFlowTest extends BaseTest {
 
-    private WebDriver driver;
     private final String name;
     private final String surname;
     private final String address;
@@ -51,14 +45,6 @@ public class OrderFlowTest {
         });
     }
 
-    @Before
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "/Users/A13039316/Downloads/chromedriver-mac-arm64/chromedriver");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
-
     @Test
     public void testOrderFlowWithValidData() {
         MainPage mainPage = new MainPage(driver);
@@ -74,12 +60,5 @@ public class OrderFlowTest {
         orderPage.fillOrderDetails(date, comment, scooterColor);
 
         assertTrue("Окно подтверждения не отображается", orderPage.isSuccessModalVisible());
-    }
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
     }
 }
