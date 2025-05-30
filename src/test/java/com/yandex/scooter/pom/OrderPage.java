@@ -33,12 +33,35 @@ public class OrderPage {
     private final By pageHeader = By.className("Order_Header__BZXOb");
 
     public void fillPersonalInfo(String name, String surname, String address, String metro, String phone) {
+        enterName(name);
+        enterSurname(surname);
+        enterAddress(address);
+        chooseMetro(metro);
+        enterPhone(phone);
+        clickNext();
+    }
+    public void enterName(String name) {
         driver.findElement(nameField).sendKeys(name);
+    }
+
+    public void enterSurname(String surname) {
         driver.findElement(surnameField).sendKeys(surname);
+    }
+
+    public void enterAddress(String address) {
         driver.findElement(addressField).sendKeys(address);
+    }
+
+    public void chooseMetro(String metro) {
         driver.findElement(metroField).sendKeys(metro);
         driver.findElement(metroSuggestion).click();
+    }
+
+    public void enterPhone(String phone) {
         driver.findElement(phoneField).sendKeys(phone);
+    }
+
+    public void clickNext() {
         driver.findElement(nextButton).click();
     }
 
