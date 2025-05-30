@@ -27,8 +27,13 @@ public class MainPage {
         return driver.findElements(accordionQuestions);
     }
 
-    public WebElement getAnswerElementForQuestion(WebElement question) {
-        return driver.findElement(By.id(question.getAttribute("aria-controls")));
+    public String getAnswerTextForQuestion(int index) {
+        WebElement question = getAllQuestions().get(index);
+        clickQuestion(question);
+
+        String answerId = question.getAttribute("aria-controls");
+        WebElement answer = driver.findElement(By.id(answerId));
+        return answer.getText().trim();
     }
 
     public void clickQuestion(WebElement question) {

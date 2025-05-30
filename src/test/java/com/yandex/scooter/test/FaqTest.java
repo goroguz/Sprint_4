@@ -55,10 +55,8 @@ public class FaqTest {
         MainPage mainPage = new MainPage(driver);
         List<WebElement> questions = mainPage.getAllQuestions();
         WebElement question = questions.get(questionIndex);
-
         mainPage.clickQuestion(question);
-        WebElement answer = mainPage.getAnswerElementForQuestion(question);
-        String actualText = answer.getText().trim();
+        String actualText = mainPage.getAnswerTextForQuestion(questionIndex);
 
         assertEquals("Текст ответа не совпадает для вопроса #" + questionIndex, expectedAnswer, actualText);
     }
