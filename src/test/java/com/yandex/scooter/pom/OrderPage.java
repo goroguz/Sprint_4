@@ -1,9 +1,8 @@
 package com.yandex.scooter.pom;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class OrderPage {
 
@@ -85,5 +84,19 @@ public class OrderPage {
 
     public boolean isSuccessModalVisible() {
         return driver.findElement(successModal).isDisplayed();
+    }
+
+    public void confirmOrder() {
+        driver.findElement(confirmYesButton).click();
+    }
+
+    public boolean isOrderConfirmed() {
+        try {
+            new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.invisibilityOfElementLocated(confirmYesButton));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 }

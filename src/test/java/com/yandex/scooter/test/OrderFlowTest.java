@@ -37,7 +37,7 @@ public class OrderFlowTest extends BaseTest {
         this.scooterColor = scooterColor;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0} {1}, метро: {3}, дата: {5}, цвет: {8}")
     public static Collection<Object[]> testData() {
         return Arrays.asList(new Object[][]{
             {"Иван", "Петров", "ул. Ленина, 10", "Черкизовская", "+79990001122", "20.05.2025", "Позвоните за час", true, "black"},
@@ -58,7 +58,8 @@ public class OrderFlowTest extends BaseTest {
 
         orderPage.fillPersonalInfo(name, surname, address, metro, phone);
         orderPage.fillOrderDetails(date, comment, scooterColor);
-
         assertTrue("Окно подтверждения не отображается", orderPage.isSuccessModalVisible());
+        orderPage.confirmOrder();
+        assertTrue("Окно подтверждения не закрылось, заказ не оформлен — баг", orderPage.isOrderConfirmed());
     }
 }
